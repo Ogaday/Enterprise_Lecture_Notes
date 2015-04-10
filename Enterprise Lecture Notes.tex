@@ -17,8 +17,8 @@
 
 \newcommand{\bQ}{\mathbf{Q}}
 \pagestyle{fancy}
-\lhead[\fancyplain{F1}{F2}]{\fancyplain{}{\leftmark}}
-%\rhead[\fancyplain{F1}{F2}]{\fancyplain{}{\bf hello}}
+\fancyhf{}
+\lhead{\leftmark}
 \cfoot{\thepage}
 
 
@@ -524,84 +524,84 @@ At one point people thought that the big data providers wouldn’t give the data
 
 
 % -----------------------------------------------------------------------
-As you can see the paragraphs are separated by any number of  blank lines.
-You can easily get a bulleted list of items with itemize:
-\begin{itemize}
-\item First item Help me!
-\item Second item
-\item Third item
-\end{itemize}
-A related environment is `enumerate':
-\begin{enumerate}
-\item First item
-  \begin{itemize}
-  \item First
-  \item Second 
-  \item Third
-  \end{itemize}
-\item Second item
-\item Third item
-\end{enumerate}
-The last useful one like this is `description':
-\begin{description}
-\item[First] First item
-\item[Second] Second item
-\item[Last] Third item
-\end{description}
+%As you can see the paragraphs are separated by any number of  blank lines.
+%You can easily get a bulleted list of items with itemize:
+%\begin{itemize}
+%\item First item Help me!
+%\item Second item
+%\item Third item
+%\end{itemize}
+%A related environment is `enumerate':
+%\begin{enumerate}
+%\item First item
+%  \begin{itemize}
+%  \item First
+%  \item Second 
+%  \item Third
+%  \end{itemize}
+%\item Second item
+%\item Third item
+%\end{enumerate}
+%The last useful one like this is `description':
+%\begin{description}
+%\item[First] First item
+%\item[Second] Second item
+%\item[Last] Third item
+%\end{description}%
+%
 
+%You can have different fonts \textit{italics}, \texttt{teletype},
+%\textbf{bold}, \textsf{sans serif}, \textsc{Small caps}.%
+%
 
-You can have different fonts \textit{italics}, \texttt{teletype},
-\textbf{bold}, \textsf{sans serif}, \textsc{Small caps}.
+%\subsection{Mathematics}
+%\label{sec:maths2}%
+%
 
+%This is a new section instead of \ref{sec:intro}.  You can put mathematics
+%in the text by enclosing it in dollar signs: $x+y_i^{2 \log a} = e^\pi$.
+%Here is an equation:
+%\begin{equation}
+%  \label{eq:new}
+%  e^{i\pi} = -1
+%\end{equation}
+%Here is a displayed equation:
+%\begin{equation}
+%  \label{eq:demo}
+%  \sum_{n=1}^\infty \tan(\theta_n + \alpha) \gg \frac{\phi}{49}
+%\end{equation}
+%That was in equation \eqref{eq:demo}.
+%\begin{equation}
+%  \label{eq:cases}
+%  \mathcal{N} = 
+%  \begin{cases}
+%    1  & \text{if } q < 0\\
+%    -\pi + \phi^2 &  \text{otherwise}
+%  \end{cases}
+%\end{equation}
+%Here are vectors and matrices
+%\begin{equation}
+%  \label{eq:matrices}
+%  \mathbf{x} = 
+%  \begin{pmatrix}
+%    1 \\
+%    2 \\
+%    a \\
+%  \end{pmatrix}
+%  \qquad
+%  \bQ = 
+%  \begin{bmatrix}
+%    1 & 45 & 23 \\
+%    2 & 12 & y \\
+%  \end{bmatrix}
+%\end{equation}
+%This is a bit of writing to finish the section before the paragraph.%
+%
 
-\subsection{Mathematics}
-\label{sec:maths2}
+%\paragraph{References}%
 
-
-This is a new section instead of \ref{sec:intro}.  You can put mathematics
-in the text by enclosing it in dollar signs: $x+y_i^{2 \log a} = e^\pi$.
-Here is an equation:
-\begin{equation}
-  \label{eq:new}
-  e^{i\pi} = -1
-\end{equation}
-Here is a displayed equation:
-\begin{equation}
-  \label{eq:demo}
-  \sum_{n=1}^\infty \tan(\theta_n + \alpha) \gg \frac{\phi}{49}
-\end{equation}
-That was in equation \eqref{eq:demo}.
-\begin{equation}
-  \label{eq:cases}
-  \mathcal{N} = 
-  \begin{cases}
-    1  & \text{if } q < 0\\
-    -\pi + \phi^2 &  \text{otherwise}
-  \end{cases}
-\end{equation}
-Here are vectors and matrices
-\begin{equation}
-  \label{eq:matrices}
-  \mathbf{x} = 
-  \begin{pmatrix}
-    1 \\
-    2 \\
-    a \\
-  \end{pmatrix}
-  \qquad
-  \bQ = 
-  \begin{bmatrix}
-    1 & 45 & 23 \\
-    2 & 12 & y \\
-  \end{bmatrix}
-\end{equation}
-This is a bit of writing to finish the section before the paragraph.
-
-
-\paragraph{References}
-
-The url is \url{http://www.dcs.ex.ac.uk/~somebody}.
-
-
+%The url is \url{http://www.dcs.ex.ac.uk/~somebody}.%
+%
+%
 
 \end{document}
