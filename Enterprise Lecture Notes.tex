@@ -219,29 +219,47 @@ This pattern is also reproduced in other languages and frameworks, such as PHP, 
 See the lecture slides for an example of an implementation of the MVC design pattern in Ruby on Rails.
 
 
-\section{Service Oriented Architecture}
+\section{Service-Oriented Architecture}
 \label{sec:SOA}
 
-Pull away from traditional web development course to think about what makes enterprise web systems as opposed to simple web applications.
+The element that separates enterprise web systems from simple web applications and fundamental wed development courses is scalability. Enterprises (hopefully) grow very rapidly and the \textbf{Three-Tier Architecture} can become bottlenecked or defficient for a rapdily scaling application.
 
-The whole thrust of enterprise computing is: What happens when things get big? When you have a large enterprise, you cannot have a single one of anything anymore.
+\textbf{Refactoring} is the process of changing the structure or layout of software without changing the underlying functionality. The aim is that the functionality is delivered in a simpler, more easily maintainable or more effective way.
+
+\textbf{Service-Oriented Architecture} is a refactoring of the \textbf{Three-Tier Architecture} so that it is better suited to enterprise web systems. In order to achieve this the architecture incorporates multiple servers and databases, decomposition of service, a load balancer and a data warehouse alongside the \textbf{Three-Tier Architecture}.
+
+\subsection{Websites and Web services}
+%http://en.wikipedia.org/wiki/Web_service
+%http://en.wikipedia.org/wiki/Web_API
+
+Websites are what you expect: human users can navigate to them in their browsers and interact with the services. Web services, on the other hand, provide services for other software via a formal, well defined and constrained interface. Often enterprises will have services which require communication with other services. This is known as Enterprise-to-Enterprise communication. The software that requests the data is known as a service requester while the software that provides it is known as the service provider.
+
+Communication. APIs. 
+
+\subsection{Features of SOA}
+
+A significant feature of \textbf{Service-Oriented Architecture} is the decomposition of services in conjuction with multiple servers/databases and a load balancer. This provides:
+\begin{description}
+  \item[Understandability]
+  The decomposition of services allows for division along organisational lines. The codebase for each service can be developed by teams which can take ownership and specialise in providing that service. Other services can be introduced or outsourced easily as well.
+  \item[Isolation]
+  Service code and data is again kept independent of other services making development and maintenance for that service pertain only to that service. One service being compromised will not compromise other services.
+  \item[Uniform Access]
+  Services can only be accessed via published, supported Application Program Interfaces. This uniformity means that services work how the customer expects because it follows a well known standard. As a side note, this provides a contract between the user and the service provider. If the API is changed, this contract is broken because the user has come to expect specific behaviour, so APIs need to be well thought out and prepared for legacy support.
+  \item[Scalability]
+  As the number of customers increase, the enterprise must be prepared to increase capacity. Services can be distributed across many (potentially virtual) servers.
+  \item[Redundency and Failover]
+  Business need to protect against fault or attacks which bring down their services. If a server fails they will be unable to serve their customers, which is a cardianl sin in the world of business. As a business scales and gets more custom, redudancy needs to be provided. \textbf{SOA} provides many servers for the same service and a load balancer. That way, if a server fails, the service requester or customer can be routed to a different server by the load balancer.
+\end{description}
+Decompose the services in order to provide understandability, isolation, uniform access(Everyone knows how it works, should all work the same way between services. Should be predictable. This provides a contract between user and service provider - cannot change API functionality once it is released or user will be upset and confused), scalability, and redundancy and failover.
+
 
 In the \textbf{Three-Tier Architecture}, the Presentation and the Business tiers won’t do much hard work - All the heavy lifting is done by the Data services tier. That’s why a load balancer is introduced, to make sure the work is evenly distributed across the multiple databases.
 
-Business need multiple databases as they scale for two reasons:
-\begin{description}
-\item[Performance] As customer numbers increase, the business must have increased capacity to serve their customers.
-\item[Redundancy] Business need to protect against fault or attacks which bring down their services. If a server fails they will be unable to serve their customers, which is a cardianl sin in the world of business. As a business scales and gets more custom, redudancy needs to be provided.
-\end{description}
+APIs are now requently RESTful, because it allows for Service Oriented Architecture to be applied much more easily. This will be covered in \ref{sec:REST}.
 
-\subsection{Websites and Web services}
-
-Websites act as you expect: human users can navigate their browsers to them and interact in the browser. Web services are strongly correlated with APIs, as they can be queried directly, rather than being rendered with html like a website. 
-
-Decompose the services in order to provide understandability, isolation, uniform access(Everyone knows how it works, should all work the same way between services. Should be predictable. This provides a contract between user and service provider - cannot change API functionality once it is released or user will be upset and confused), scalability, and redundancy and failover.
-
+\subsection{Example: Google}
 Examples: Both models use the Service Oriented architecture with services decomposed. The advantages are written above, plus with the modularity of the structure of the business, it would be easy to expand to offer a new service as the business develops, such as offering a new insurance field, or a new service, plus if one service fails, the others will be unaffected. Another good example is Google; Google offers many diverse and well developed services (Ads, search, maps, mail, drive, google+, calendar, scholar, videos, the play store and many more) which are well separated and modulated. This is not always possible though, sometimes services are impossible to extract and insulate from the other services. A good example is the login service offered by a lot of enterprises. If that fails, a lot of the other services may be rendered unavailable.
-
 
 \section{Ruby on Rails}
 
@@ -308,7 +326,7 @@ Client sides will have to update their programs to reflect the changed server pr
 
 
 \section{Representational State Transfer}
-\label{sec:ReST}
+\label{sec:REST}
 
 Recall: RPC. Arguments are marshalled (packed up) and unmarshalled (unpacked). Problem is there isn’t a universal WSDL - way of describing which services are provided in an xml file which can 
 
