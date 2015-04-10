@@ -42,7 +42,6 @@ University of Exeter}
 \label{sec:intro}
 
 \subsection{What is Enterprise Computing?}
-\label{sec:1.1}
 Enterprise computing is all about combining separate applications, services and processes into a unified system that is greater than the sum of its parts.
 \begin{displayquote}
 ``Enterprise Computing is seen as an integrated solution/platform for separate business problems, such as database management, analytics, reports, which have previously been treated as single business problems treated with specific software solutions.''
@@ -51,99 +50,149 @@ Enterprise computing is all about combining separate applications, services and 
 - \url{http://www.techopedia.com/definition/27854/enterprise-computing}
 
 \subsection{Drivers and Motivations}
-\label{sec:1.2}
 
 \begin{description}
-\item[Up-scaling] Enterprises need to be able to upscale to suit an increase in customers.
+\item[Up-scaling] An enterprise may need to be able to upscale to suit an increase in customers.
 \item[Outsourcing] Specialist service providers will be able to fulfill requirements cheaper and easier than in-house solutions. Circumvents the need to invest in hardware, software and human resources, which requires \textit{Capital Investment}.
 \end{description}
 
 \subsection{Assumptions}
 
-This course makes two axiomatic assumotions.
+This course makes two axiomatic assumotions:
 
 \begin{enumerate}
 \item \textbf{Enterprise Computing is based on web technologies.} This is not a controversial claim because of the many examples are out there. Netflix, Google, Twitter, Facebook are all worth billions of dollars and are based upon web technologies. Businesses will all need to provide their services and reach their customers over the web in one capacity or another.
 \item \textbf{Enterprise Computing is done on the Ruby on Rails framework.} This is a controversial claim because there are many models available for web enterprises and Ruby on Rails provides just one instance of that. However this course will only be concerned with Enterprise Computing with Ruby on Rails.
 \end{enumerate}
 
-\section{Three Tier Architecture}
+\section{Three-Tier Architecture}
 \label{sec:tier}
 
-Web programs often follow a \textit{Three Tier Architecture}.
+Web programs often follow a \textbf{Three-Tier Architecture}.
 \begin{description}
 \item[Data Services Tier]
 This provides database access. Having this tier provides abstraction from the database behind the business. This means that migrating services, expanding onto more suitable hardware and scaling up is easier.
 \item[Business Services Tier]
-This provides the ``business logic'', which is the functionality of the enterprise. For instance, Amazon provides for items to be added to carts, carts to be checked out, products to be searched and displayed and many many more small services which comprise their webshop and are all functions of the business. This might require communicating with the data services tier and for the output to be sent to the presentation tier.
+This provides the ``business logic'', which is the functionality of the enterprise. For instance, Amazon provides for items to be added to carts, carts to be checked out, products to be searched and displayed and many many more small services which comprise their webshop and are all functions of the business. This might require communicating with the Data Services Tier and for the output to be sent to the Presentation Services Tier.
 \item[Presentation Services Tier]
-This provides the user interface and means that the responses can be adjusted for each user. Specific users can be targeted differently with specialised content; either suitable presentation for a device and browser can be provided (see headers). For example, mobile websites for mobile devices and html generated for internet explorer instead of firefox can be sent to the client. Alternatively, specific demographics can be targeted with specific presentational services. Facebook, Google and Amazon all often provide experimental new interfaces to a subset of their users. This is made possible by the abstraction of the Presentation tier, which can be altered without affecting or interfering with the underlying business and data tiers.    %come abck later and do a reference to the MVC section with \label{sec:MVC}
+This provides the user interface and means that the responses can be adjusted for each user. Specific users can be targeted differently with specialised content; presentation suitable for each client can be provided. For example, mobile devices could be served mobile websites and and html generated specifically for internet explorer (instead of, say, firefox) can be sent to the client. Alternatively, specific demographics can be targeted with specific presentational services, such as region specific language pages. Facebook, Google and Amazon all often provide experimental new interfaces to a subset of their users. This is made possible by the abstraction of the Presentation tier, which can be altered without affecting or interfering with the underlying business and data tiers. This sort of abstraction is leveraged in the \textbf{Model-View-Controller} which is covered in \ref{sec:MVC}.   %come abck later and do a reference to the MVC section with \label{sec:MVC}
 \end{description}
 
 \subsection{HTTP: The Hypertext Transfer Protocol}
 \label{http}
 
-Communication is provided through the Hypertext Transfer Protocol (HTTP). HTTP is a call and response protocol. The client makes a call (Request) and the server sends a response. The response is usually a web page or service. All HTTP communication is in form text (Strings), rather than ints, bools etc.
+Communication is provided through the \textbf{Hypertext Transfer Protocol} (\textbf{HTTP}). \textbf{HTTP} is a call and response protocol. The client makes a call (request) and the server sends a response. The response is usually a web page or service. All \textbf{HTTP} communication is in form text (Strings), rather than ints, bools or other types.
 
 \subsubsection{HTTP Requests}
 
-HTTP Requests consist of a request line, request headers and a request body.
+\textbf{HTTP} Requests consist of a request line, request headers and a request body.
 \begin{description}
 \item[The Request Line]
 The request line consists of a method (or verb), a resource and a version.
 eg:
-METHOD    RESOURCE          VERSION
-     GET    /images/logo.png    HTTP/1.1
 
-The request methods are 
-GET - for receiving data
-POST - for sending data/send amendment data
-PUT - for amending data/send replacement data
-DELETE - for deleting data
-N.B. GET requests print the data in the URL, which is really bad for anything except debugging. Therefore bank details which are sent with a GET request, for instance, will leave those details in the browser in plain text, so either the request can be intercepted and read, or the browser can later be scraped because there will be a record of the url, and the url, along with the details, will be recorded in server log files.
+\begin{tabular}{ l c r }
+  \textbf{METHOD} & \textbf{RESOURCE} & \textbf{VERSION} \\
+  GET & /images/logo.png & HTTP/1.1 \\
+\end{tabular}
+
+The request methods are
+
+\begin{tabular}{ l l }
+  \textbf{GET} & For receiving data. \\
+  \textbf{POST} & For sending data / amending data. \\
+  \textbf{PUT} & For amending data. \\
+  \textbf{DELETE} & For deleting data. \\
+\end{tabular}
+
+Note \textbf{GET} requests print the data in the URL, which is really bad for anything except debugging. Therefore bank details which are sent with a \textbf{GET} request, for instance, will leave those details in the browser in plain text, so either the request can be intercepted and read, or the browser can later be scraped because there will be a record of the url, along with the details, will be recorded in server log files.
 \item[Request Headers]
-Headers consist of Name: Value pairs on separate lines.
-eg.
-Content-Length    :    255
+Headers consist of \texttt{Name: Value} pairs on separate lines.
+eg. \\
+\texttt{Content-Length: 255}
+ 
+Some of the most important headers are \\
+\begin{tabular}{ l l }
+  \textbf{Header} & \textbf{Meaning} \\
+
+  Host & domain name of server \\
+
+  Cache-Control & caching allowed \\
+
+  Connection & connection preferred \\
+
+  Content-Length & length of body \\
+
+  Cookie & cookie data \\
+
+  Date & date sent \\
+
+  User-Agent &  name of client \\
+\end{tabular}
 \item[The Request Body]
-The request body is empty except for the case of POST requests, which send the data in the body.
+The request body is empty except for the case of \textbf{POST} requests, which send the data in the body.
 \end{description}
 
-N.B. The server can also deny your request! It is under obligation to follow the request, so for instance DELETE    google.com    HTTP/1.1 would not work.
+Note that the server can also deny your request! It is under no obligation to follow the request, so for instance \texttt{DELETE google.com HTTP/1.1} would likely not be followed by the google servers.
+
+Furthermore, most browsers can only send \textbf{GET} and \textbf{POST} requests. They simulate functionality of \textbf{PUT} and \textbf{DELETE} using the other verbs.
 
 \subsubsection{HTTP Responses}
 
-HTTP responses consist of status line, response headers and a response body.
+\textbf{HTTP} responses consist of status line, response headers and a response body.
 \begin{description}
 \item[Status Line]
 The status line consists of version, code and reason
-eg.
-HTTP/1.1    200    OK
-The string ``reason'' is determined by the code. The code indicates different responses from the server, and the first digit classifies the response.
-2 - good
-3 - relocation advice, resource has moved.
-4 - bad ie. 404 resource not found.
-5 - transient bad, server overloaded etc.
+eg. 
 
+\begin{tabular}{ l c r }
+  VERSION & CODE & REASON \\
+  \texttt{HTTP/1.1} & \texttt{200} & \texttt{OK} \\
+\end{tabular}
+The string ``reason'' is determined by the code. The code indicates different responses from the server, and the first digit classifies the response.
+
+\begin{tabular}{ l l }
+  \textbf{INITIAL DIGIT} & \textbf{REASON} \\
+  2 & Good \\
+  3 & Relocation advice, resource has moved. \\
+  4 & Bad ie. 404 resource not found. \\
+  5 & Transient bad, server overloaded etc. \\
+\end{tabular}
+
+For instance
+
+\begin{tabular}{ l l }
+  \textbf{CODE} & \textbf{REASON} \\
+  \texttt{200} & OK  \\
+  \texttt{301} & Moved Permanently  \\
+  \texttt{404} & Not Found  \\
+  \texttt{500} & Internal Server Error  \\
+\end{tabular}
 \item[Response Header]
-Response headers consist of Name    :    Value pairs again.
-Cache-control    :    caching allowed
-Connection    :    Connection preferred
-Content Length    :    (length of body)
+Response headers consist of \texttt{Name: Value} pairs again.
+
+\begin{tabular}{ l l }
+  \textbf{NAME} & \textbf{VALUE}  \\
+  Cache-control : & Caching allowed \\
+  Connection: & Connection preferred \\
+  Content Length: & (length of body) \\
+  Server & name of server  \\
+  Set-Cookie & cookie data  \\
+  Transfer-Encoding & content encoding used  \\
+\end{tabular}
 
 A case where caching might not be preferred is a live score ticker, so it will continue to update and won’t use the cached value of the score.
-N.B. Can get a snapshot of past browser activity by looking at the browser cache.
+
+Note that is possible to get a snapshot of past browser activity by looking at the browser cache.
 
 \item[Response Body]
 This is often in HTML, but can be anything else (javascript, xml, etc).
 \end{description}
 
-
-
 \section{Introduction to Ruby}
 \label{sec:ruby}
 
-Ruby is duck typed, interpreted, high level, OOP capable language. It was invented/designed by Yukihiro ``Matz'' Matsumoto in Japan around two decades ago and has risen to popularity because of its expressivity and Ruby on Rails, a very successful web framework for building web apps. Ruby is introduced by countless high quality tutorials which I will not try to match.
+Ruby is duck typed, interpreted, high level, Object Oriented language. It was invented/designed by Yukihiro ``Matz'' Matsumoto in Japan around two decades ago and has risen to popularity because of its expressivity and Ruby on Rails, a very successful web framework for building web appications. Ruby is introduced by countless high quality tutorials which I will not try to match.
 
 %Ruby on Rails is a web framework for building web applications which follow the Model-View-Controller design pattern (see later). Ruby on Rails itself is not examinable and is covered with much more expertise by countless others so I won't repeat them here.
 
@@ -153,16 +202,16 @@ Ruby is duck typed, interpreted, high level, OOP capable language. It was invent
 \subsection{Design Patterns}
 Design patterns come about when people find a solution to a challenge and encode them in a pattern. What makes you stand out is the ability to not only learn from your own mistakes, but from others' mistakes as well by using their design patterns.
 
-In the three tier architecture, a common design pattern is the Model-View-Controller which is a pattern upon which the Business tier can be built. In this course, the Model-View-Controller design pattern principles are the ``rails'' upon which we are sat.
+In the \textbf{Three-Tier Architecture}, a common design pattern is the \textbf{Model-View-Controller} which is a pattern upon which the Business Tier can be built. In this course, the \textbf{Model-View-Controller} design pattern principles are the ``rails'' upon which we and the ruby code are sat.
 
 \subsection{The Model}
-The model is responsible for database access. Why use a model to access the db? Because then the pattern is independent of database architecture, or at least insulated from the databse and then the enterprise is more portable to different architectures and DB services.
+The model is responsible for \textbf{database access}. Why use a model to access the db? Because then the pattern is independent of database architecture, or at least insulated from the databse and then the enterprise is more portable to different architectures and DB services.
 
 \subsection{The View}
-Responsible for data presentation. By separating the presentation from the data handling, it is easier to focus on creating the best presentation. It is possible to have visualisation experts to specifically work on the view. The view is very important because gives customers strong impressions of the enterprise, and can influence customer decision. For instance, Amazon and Netflix provide different views in some cases in order gauge the effect on customers. Facebook and Google can upgrade and modify their interfaces without risking the other aspects of their service.
+Responsible for \textbf{data presentation}. By separating the presentation from the data handling, it is easier to focus on creating the best presentation. It is possible to have visualisation experts to specifically work on the view. The view is very important because gives customers strong impressions of the enterprise, and can influence customer decision. For instance, Amazon and Netflix provide different views in some cases in order gauge the effect on customers. Facebook and Google can upgrade and modify their interfaces without risking the other aspects of their service.
 
 \subsection{The Controller}
-Responsible for data processing and business logic. This section sends emails, adds things to cart, does programmatic things.
+Responsible for \textbf{data processing} and business logic. This section sends emails, adds things to cart, does programmatic things.
 
 \subsection{The MVC Pattern}
 This pattern is also reproduced in other languages and frameworks, such as PHP, and most e-commerce platforms follow this design pattern.
@@ -177,7 +226,7 @@ Pull away from traditional web development course to think about what makes ente
 
 The whole thrust of enterprise computing is: What happens when things get big? When you have a large enterprise, you cannot have a single one of anything anymore.
 
-In the three tier architecture, the Presentation and the Business tiers won’t do much hard work - All the heavy lifting is done by the Data services tier. That’s why a load balancer is introduced, to make sure the work is evenly distributed across the multiple databases.
+In the \textbf{Three-Tier Architecture}, the Presentation and the Business tiers won’t do much hard work - All the heavy lifting is done by the Data services tier. That’s why a load balancer is introduced, to make sure the work is evenly distributed across the multiple databases.
 
 Business need multiple databases as they scale for two reasons:
 \begin{description}
@@ -238,21 +287,21 @@ Also slow.
 Solutions:
 Use a standard interface. There are two particular ones: CORBA and RMI (for Java). 
 
-We’re not going to use either. A much more widely available one is HTTP, consisting of the request line headers, bodies etc. as seen earlier. Even the above two are not ubiquitous and require the client, who can’t be considered universally capable enough to download and install/update software such as CORBA.
+We’re not going to use either. A much more widely available one is \textbf{HTTP}, consisting of the request line headers, bodies etc. as seen earlier. Even the above two are not ubiquitous and require the client, who can’t be considered universally capable enough to download and install/update software such as CORBA.
 
 Operation Information
 
 We can specify the procedure to be called on the server in the resource section of the request.
-Can specify arguments as query string values when using GET. Follows “?” character, as in google, youtube etc. Problem: can leave out arguments etc because HTTP is weakly typed. No strong checking of the imminent procedure call, might only be found at run time, and fail on the server. Advantage: gets through firewalls and only dependency is a modern browser, which are HTTP capable.
+Can specify arguments as query string values when using GET. Follows “?” character, as in google, youtube etc. Problem: can leave out arguments etc because \textbf{HTTP} is weakly typed. No strong checking of the imminent procedure call, might only be found at run time, and fail on the server. Advantage: gets through firewalls and only dependency is a modern browser, which are \textbf{HTTP} capable.
 
-HTTP RPC Returns
+\textbf{HTTP} RPC Returns
 
 Needs to be a significant amount of work: an RPC to add two numbers would not be worth it.
-404 errors occur because of the weak typing of HTTP requests/RPCs. The APIs are not published in a machine readable way. Recall 400s are permanent and 500s are transient.
+404 errors occur because of the weak typing of \textbf{HTTP} requests/RPCs. The APIs are not published in a machine readable way. Recall 400s are permanent and 500s are transient.
 
 Close-Coupling
 
-If you invent your own API you get a close coupling of server and client. Therefore, if the API changes, the contract is broken and the client programs will no longer work because their HTTP requests will fail.
+If you invent your own API you get a close coupling of server and client. Therefore, if the API changes, the contract is broken and the client programs will no longer work because their \textbf{HTTP} requests will fail.
 
 Client sides will have to update their programs to reflect the changed server protocols. This is expensive, and can cause downtime, so customers and traffic might be lost. As stated before, changing APIs is best avoided.
 
@@ -291,7 +340,7 @@ GET corresponds to show.
 PUT corresponds to update.
 DELETE corresponds to destroy.
 
-This means there is no need to provide an elaborate API. Routings are a translation file in ruby which tells the server which ruby code to run when it receives an HTTP request.
+This means there is no need to provide an elaborate API. Routings are a translation file in ruby which tells the server which ruby code to run when it receives an \textbf{HTTP} request.
 
 View
 Consists of markup/client side code such as html.
@@ -339,7 +388,7 @@ Coffee bar is an analogy for the MVC. Barrista takes your order and has various 
 
 Why use MVC? Because it’s been proven to work, but also because it’s is compulsory with Ruby on Rails.
 
-Use cases correspond to http verbs, ie. GET, POST, PUT, DELETE, used for RESTful web services.
+Use cases correspond to \textbf{http} verbs, ie. GET, POST, PUT, DELETE, used for RESTful web services.
 
 Object Relational Map hides db statements behind objects. So you call ruby code which automatically calls the sql commands.
 
@@ -347,7 +396,7 @@ Template design pattern allows the mixing of html and ruby code, only differenti
 
 Have the feedback such as “Created!” so the user knows if something has gone wrong.
 
-Curl interacts with http requests? look into.
+Curl interacts with \textbf{http} requests? look into.
 
 “new” is for human beings, not for robots.
 
@@ -402,7 +451,7 @@ Rails doesn’t: maintain data in the form  which you got right (which is good c
 
 \section{Database Scalability}
 
-By now we are familiar with the three tier architecture: Presentation - Business Services - Data services.
+By now we are familiar with the \textbf{Three-Tier Architecture}: Presentation - Business Services - Data services.
 
 As the enterprise scales up, we will need more more servers to provide the business tier. The internet is suited to this because the RESTful (Representational state transfer) architecture means that the server doesn’t store any state, it’s all held by the client in the form of cookies etc. This is good because therefore load balancing is easy, redundancy of server is easy because a user isn’t tied to using any server, they can go to any other server and be served in the same way.
 
@@ -469,7 +518,7 @@ Retrieving data from the transactional database isn’t a zero cost operation. I
 
 Need to answer the question: How are we doing right now? Last week? This year? Past 5 years? Historically. Other businesses will do this, so you need to. They will know what their customers want and they will provide it. That’s why you need a data warehouse.
 
-\section{Cloud architecture}
+\section{Cloud A rchitecture}
 
 Analogy between providing electricity and the cloud.
 
