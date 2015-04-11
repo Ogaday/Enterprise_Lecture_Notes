@@ -366,47 +366,43 @@ Client sides will have to update their programs to reflect the changed server pr
 \section{Representational State Transfer}
 \label{sec:REST}
 
-Recall: RPC. Arguments are marshalled (packed up) and unmarshalled (unpacked). Problem is there isn’t a universal WSDL - way of describing which services are provided in an xml file which can 
+In the previosu section we looked at \textbf{RPC}. Arguments and return values are marshalled (packed up and serialised) and unmarshalled (unpacked unserialised) in the stub and in the skeleton. Problem is there isn’t a universal Web Service Definition Language (WSDL), which is a way of describing which services are provided in a large xml file which can be downloaded and used by a developer to build client software to remotely call procedures to be executed on the server. This is not ideal. Instead, a better alternative is for the server to organise its services via the RESTful convetion.
 
-We would like our web services to be used by other programs as well as by humans. Services should be automatically accessible.
+We would like our web services to be used by other programs as well as by humans, such as in Enterprise to Enterprise communciation. Therefore, our services should be automatically accessible, and RESTfulness allows for this.
 
-Where does REST come from? Ron Fielding tried to study and extract from the web why it was so successful. See lecture slides for list of things which made it successful.
+\subsection{RESTful Features}
+Ron Fielding tried to study and extract from the web the features that made it so successful. He decided that the following elements made for successful web services.
 
-Client server constraint. Server deals with services and data, and client provides UI, which means programs didn't need to be downloaded to provide the service. (Apps revisit this model though, which are successful because there is a direct link/contract with the app provider and downloader). Users browse services provided on the server.
+\begin{description}
+  \item[Client server constraint]
+  Server deals with services and data, and client interact with the UI, which means software dosen't need to be downloaded to provide the service. (Apps revisit this model though, which are successful because there is a direct link/contract with the app provider and downloader). Clients browse services provided on the server.
+  \item[Statelessness]
+  The server does not store information about the state of its users. Each time a client accesses a server it is as if for the first time. Statelessness requires the use of cookies to provide state on the client side instead. The key advantage is that if the server becomes overwhelmed or fails, an alternative server, for instance in a load balanced system, can provide the same service to the customer. Without cookies, this element would be fatal to the internet.
+  \item[Caching]
+  Headers dictate whether data can be cached or not. Means some repeated requests are not necessary. The cache obviates long routes to servers for data which has already been requested. Examples of things that should not be cached are things like live results. A side note is that caching trades space for time! If something is cached it takes up space, but requires less time to access.
+  \item[Uniform Interface]
+  Similar to databases, resources are managed using only CRUD. Interesting because delete cannot be uttered by any web browser.
+  \item[Layered System]
+  The internal layers such as databases cannot be seen by the client. One url is used to access a service, regardless of the architecture beneath it. Gets rid of close coupling: the client doesn't need to know the details of the architecture beneath, so the same service can be provided in the same fashion, even if the implementation is different.
+  \item[Code-on-Demand]
+  The original web proposal envisaged that there would have to have \textbf{extensibility}. The server must be able to provide code to clients for them to execute. In practice it is extremely difficult to pull this off. The current system is javascript. The big difficulty is arbitrary code execution is dangerous, so the code on demand must run in a sandbox which is very hard to get right. Previous efforts include java applets, which had various problems: requiring permissions to runs, taking time to load up the JVM etc. There was a phase when javascript was turned off by everyone because of arbritary code execution, now websites won't work without it.
+\end{description}
 
-Statelessness. Each time a client accesses a server it is as if for the first time. Use cookies to provide state client side instead. Advantage is that if the server becomes overwhelmed, an alternative server, in a load balanced system for instance, can provide the same service to the customer. Without cookies, this element would be fatal to the internet.
+The web is all about manipulating data on a server. Normally the only manipulation is to view data, like GET. Othertimes it is to upload, which is done with PUT.
 
-Caching. Headers dictate whether data can be cached or not. Means some repeated requests are not necessary. The cache obviates long routes to servers for data which has already been requested.
-
-Uniform interface. Similar to databases, resources are managed using only CRUD. Interesting because delete cannot be uttered by any web browser.
-
-Layered System. The internal layers such as databases cannot be seen by the client. One url is used to access a service, regardless of the architecture beneath it. Gets rid of close coupling: the client doesn't need to know the details of the architecture beneath, so the same service can be provided in the same fashion, even if the implementation is different.
-
-Code-on-Demand. Extensibility. The server must be able to provide code to clients. In practice extremely difficult to pull this off. Current system is javascript. Big difficulty is arbitrary code execution is dangerous, so the code on demand must run in a sandbox - very hard to get right.
-
-Web is about manipulating data on a server. Normally only view data, like GET.
-
-If we want to produce a REST version of airport code look ups.
-
-Advantage to using design patterns such as using the MVC architecture is that other people have made the mistakes and refined to process ahead of you, even if you would eventually discover the design pattern yourself.
-
-Controller
-POST corresponds to create. ``permit'' is pertaining to only accepting argument which correspond to :code and :name
-GET corresponds to show.
-PUT corresponds to update.
-DELETE corresponds to destroy.
-
-This means there is no need to provide an elaborate API. Routings are a translation file in ruby which tells the server which ruby code to run when it receives an \textbf{HTTP} request.
-
-View
-Consists of markup/client side code such as html.
-
-Doesn't need all the html elements which you might otherwise want.
-Don't submit information using code.
-
-Mixing of code and html is a design pattern: the Template design pattern.
-
-Finally: the world wide web has some incredibly successful ideas behind it.
+\subsection{Further Points}
+In the lectures an example of a RESTful Airport code lookup in Ruby on Rails was covered. Some key points from that are
+\begin{description}
+  \item[Template Deisgn Pattern] This is the ability to embed code in HTML. This is useful for dynamic content generating and for mixing the ORM into your views.
+  \item[CRUD Operations]
+  \begin{tabular}{l l}
+    POST & corresponds to create. \\
+    GET & corresponds to show. \\
+    PUT & corresponds to update. \\
+    DELETE & corresponds to destroy. \\
+  \end{tabular}
+  \item[Good Ideas Behind The Web] REST constraints provide the foundations for the incredibly successful web.
+\end{description}
 
 
 % -----------------------------------------------------------------------------
