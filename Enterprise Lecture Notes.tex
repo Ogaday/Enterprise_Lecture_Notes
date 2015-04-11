@@ -39,6 +39,7 @@ University of Exeter}
 \pagebreak
 
 
+
 % -----------------------------------------------------------------------------
 \section{Introduction}
 \label{sec:intro}
@@ -66,6 +67,7 @@ This course makes two axiomatic assumotions:
 \item \textbf{Enterprise Computing is based on web technologies.} This is not a controversial claim because of the many examples are out there. Netflix, Google, Twitter, Facebook are all worth billions of dollars and are based upon web technologies. Businesses will all need to provide their services and reach their customers over the web in one capacity or another.
 \item \textbf{Enterprise Computing is done on the Ruby on Rails framework.} This is a controversial claim because there are many models available for web enterprises and Ruby on Rails provides just one instance of that. However this course will only be concerned with Enterprise Computing with Ruby on Rails.
 \end{enumerate}
+
 
 
 % -----------------------------------------------------------------------------
@@ -194,6 +196,7 @@ This is often in HTML, but can be anything else (javascript, xml, etc).
 \end{description}
 
 
+
 % -----------------------------------------------------------------------------
 \section{Introduction to Ruby}
 \label{sec:ruby}
@@ -201,6 +204,7 @@ This is often in HTML, but can be anything else (javascript, xml, etc).
 Ruby is duck typed, interpreted, high level, Object Oriented language. It was invented/designed by Yukihiro ``Matz'' Matsumoto in Japan around two decades ago and has risen to popularity because of its expressivity and Ruby on Rails, a very successful web framework for building web appications. Ruby is introduced by countless high quality tutorials which I will not try to match.
 
 %Ruby on Rails is a web framework for building web applications which follow the Model-View-Controller design pattern (see later). Ruby on Rails itself is not examinable and is covered with much more expertise by countless others so I won't repeat them here.
+
 
 
 % -----------------------------------------------------------------------------
@@ -225,6 +229,7 @@ Responsible for \textbf{data processing} and business logic. This section sends 
 This pattern is also reproduced in other languages and frameworks, such as PHP, and most e-commerce platforms follow this design pattern.
 
 See the lecture slides for an example of an implementation of the MVC design pattern in Ruby on Rails.
+
 
 
 
@@ -273,6 +278,7 @@ Google offers many, many services which can be used independently of each other.
 Sometimes services cannot be abstracted and decomposed fully from each other, and therefore if there is a failure in one service, the other services will also be affected. The best example of this is the log in service, which mnay enterprises offer. If the log in and authentification service fails then while the search engine, videos and other services may be available, many other of Google's services might not be, such as the email service, the calendar service and others. This is because it it is too integrated into the usage. The log in service will probably still have its own team, however, who can take ownership of it, but other services will need to be able to interact with it, which is why uniformity of access must be maintained.
 
 
+
 % -----------------------------------------------------------------------------
 \section{Ruby on Rails}
 
@@ -298,6 +304,7 @@ The Views can contain forms and hyperlinks so that CRUD operations can be sent v
 
 
 
+
 % -----------------------------------------------------------------------------
 \section{Remote Procedure Calls}
 \label{sec:RPC}
@@ -310,7 +317,7 @@ As an enterprise scale, more CPUs will be required, because the limits of what a
    \item Deadlock and Livelock are common problems as parallel processors block while sending or receiving messages or try to access the same resource simultaneously.
  \end{enumerate}
 
- Distributed or parallel computing is the field of study of this problem. One paradigm is that of \textbf{Remote Procedure Calls}. A regular procedure call is simply a local method invocation with different args. ie. $f(a, b, c)$. The remote aspect comes from one computer invoking a method call on another processor across a network. There are more problems specific to this form or parallelism.
+Distributed or parallel computing is the field of study of this problem. One paradigm is that of \textbf{Remote Procedure Calls}. A regular procedure call is simply a local method invocation with different args. ie. $f(a, b, c)$. The remote aspect comes from one computer invoking a method call on another processor across a network. There are more problems specific to this form or parallelism.
 
 \begin{enumerate}
   \item How to address the function? Need to name the machine on which the method is being invoked.
@@ -340,7 +347,6 @@ However, we’re not going to use either. A much more widely available one is \t
 We can specify the procedure to be called on the server in the resource section of the \textbf{GET} request.
 Can specify arguments as query string values when using \textbf{GET}. Follows “?” character, as in google, youtube etc. The problem with this is it is possible to leave out arguments or provide invalid argument types because \textbf{HTTP} is weakly typed. There is no strong checking of the imminent procedure call so errors might only be found at run time and fail on the server. The main advantage is that the only dependency for HTTP RPC is a modern browser which is \textbf{HTTP} capable, which is all of them.
 
-
 Might want to look at the lecture slides and copy and comment on some diagrams
 
 Anatomy of the request strings.
@@ -362,11 +368,12 @@ Client sides will have to update their programs to reflect the changed server pr
 
 
 
+
 % -----------------------------------------------------------------------------
 \section{Representational State Transfer}
 \label{sec:REST}
 
-In the previosu section we looked at \textbf{RPC}. Arguments and return values are marshalled (packed up and serialised) and unmarshalled (unpacked unserialised) in the stub and in the skeleton. Problem is there isn’t a universal Web Service Definition Language (WSDL), which is a way of describing which services are provided in a large xml file which can be downloaded and used by a developer to build client software to remotely call procedures to be executed on the server. This is not ideal. Instead, a better alternative is for the server to organise its services via the RESTful convetion.
+In the previous section we looked at \textbf{RPC}. Arguments and return values are marshalled (packed up and serialised) and unmarshalled (unpacked unserialised) in the stub and in the skeleton. Problem is there isn’t a universal Web Service Definition Language (WSDL), which is a way of describing which services are provided in a large xml file which can be downloaded and used by a developer to build client software to remotely call procedures to be executed on the server. This is not ideal. Instead, a better alternative is for the server to organise its services via the RESTful convetion.
 
 We would like our web services to be used by other programs as well as by humans, such as in Enterprise to Enterprise communciation. Therefore, our services should be automatically accessible, and RESTfulness allows for this.
 
@@ -405,32 +412,49 @@ In the lectures an example of a RESTful Airport code lookup in Ruby on Rails was
 \end{description}
 
 
+
 % -----------------------------------------------------------------------------
-\section{Resource Oriented Architecture}
+\section{Resource-Oriented Architecture}
 
-Why do we want scalability in enterprise computing? Because we want our enterprise to be able to grow to match demand and the internet so far does not appear to have a near limit on how far it can scale, so our enterprise needs to be able to (potentially) match that. We don’t want to reach a point of growth and find the architecture needs to be redesigned because that is costly and stops the service from reaching the customer.
+Why do we want scalability in enterprise computing? Because we want our enterprise to be able to grow fluidly in order to match demand. The internet, so far, does not appear to have a near limit on how far it can scale, so our enterprise needs to be able to (potentially) match that. We don’t want to reach a point of growth and find the architecture needs to be redesigned because that is costly and stops the service from reaching the customer. Not only that, modern enterprises require a high speed of scaling. Web enterprises go from being inexistent to being worth billions of dollars, which you won't find in traditional business (the converse also happens of course).
 
-REST constraints lead to:
-separation of resource from representation: the representation is given to the client, and it can be customised according to the client via headers, if it wants to. A spanish client might want the webpage in spanish, for instance.
+Resource Oriented Architecture develops software as in terms of textbf{resources} and allows the client to interact with \textbf{representations} of those \textbf{resources} via a RESTful interface.
 
-The classic example is a coke machine, which is solid. Some professors decided to put the state of vending machine on the internet, and the representation was a view of that state.
+\subsection{Separation of Resource From Representation} 
 
-1962 playboy centrefold is a image processing benchmark. Another example is google maps. Can see the change of resource as the view scales. The change between different resolution/scale images can be quite drastic.
+As noted above, the server software is built in terms of resources, which can be records from a database, code functionality or data strcutures. The client shouldn't be given direct access to this resource, of course. Instead, they can interact with a representation of it. In this way, it can also be customised according to the client via headers, if needs be. A spanish client might want the webpage in spanish, for instance. Google maps provide satelite images which are resources, but depending upon the required resolution, the client will be served different scale representations. Different devices or browsers may want different representations of the same resource. There may be many different representations of the same resource.
 
-self-descriptive representations: “Here’s the message, and here’s how you interpret it!” - not always the latter half, sometimes it’s just “I hope you have an application that can open this!” ie. pdfs. Often done it XML which will be covered later. This is the metadata describing the syntax and semantics. 
+As noted, this specification is done via headers. Headers can contain geographical data, screen size data, browser information, cookie information, etc.
 
-Machines can read XML because it is a formal language it can easily process with tags containing different aspects which are easy to navigate. Included is a handy description of how to make sense of it.
+\subsection{Self-Descriptive Representations}
 
-Why don’t we ship pictures instead of xml? It’s the same information. Because the picture is much more difficult to work with than the xml/raw code/information. So much structure to wade through in pdfs/images. So representations are much easier to deal with by the client side machine. It is better to send fundamental representations than convoluted ones.
+By self-descriptive representations, we mean a representation that contains data as well as the metadata that describes its syntax and semantics. Essentially, when you receive a representation of a resource you re also told how to interpret it. Sometimes there is not a standard. Then you often get an XML file with a document type definition (DTD), which will be covered in \ref{sec:XML}
 
-manipulation of resources by representation: Representations can be changed. Google maps encouraged people to add pins to it to mark out locations and shops. People like direct manipulation. The above would not have worked if the pins had to be entered via latitude and longitude.
+Why don’t we ship pictures instead of xml? It’s the same information. Because the picture is much more difficult to work with than the xml / raw code / information. So much structure to wade through in pdfs / images. So representations are much easier to deal with by the client side machine. It is better to send fundamental representations than convoluted ones.
 
-Also much easier to change: rather than having to manipulate machine code to change a variable, can change the representation and it will change the resource!
-hypermedia as the engine of application state: The big idea! HATEOAS. There are two ways of telling a server what to do next: Either click a hypertext url (link) or submit a form with the submit button. The advantage: The client keeps track of state! Imagine if google had to keep track of the state of each of their users, the memory cost alone would be massive, never mind the book keeping. Also, the client can reconnect to another server as determined by a load balancer, but that doesn’t matter! There is no need to go back to the same one. The same server could crash, and another server on the other side of the world could take over and it wouldn’t make a difference, because the state is stored by the client, in the browser history and url etc.
+\subsection{Manipulation Of Resources By Representation}
+Representations can be changed. Google maps encouraged people to add pins to it to mark out locations and shops. People like direct manipulation. The above would not have worked if the pins had to be entered via latitude and longitude.
 
-In the example, if someone asks for fanta, the server doesn’t remember if you asked for fanta before! It doesn’t care if you looked at the menu or not.
+IT's also much easier to change the resource via the representation: rather than having to manipulate machine code to change a variable, it is possible to change the representation and it will change the resource!
 
-Even if the server could manage the memory constraints and book keeping of storing state, it’s not particularly failure/crash safe at all! if the server goes down, so does the state.
+\subsection{Hypermedia As The Engine Of Application State} 
+
+HATEOAS is the big idea! Content served to the client is embedded with hypertext. There are two ways of telling a server what to do next: Either click a hypertext url (link) or submit a form with an html submit button. The advantage of this is that the client keeps track of their own state! Imagine if google had to keep track of the state of each of their users: the memory cost alone would be massive, never mind the book keeping. Furthermore, the client can reconnect to another server as determined by a load balancer. The server could crash, and another server on the other side of the world could take over and it wouldn’t make a difference, because the state is stored by the client, in the browser history and url etc.
+
+By providing the options or hyperlinks and submit buttons, the server therefore provides the clients with options. The server then does not need to track client state or where the client is at any time, and it can serve out pages on demand to the client with no memory or book keeping costs.
+
+For example, the server provides a choice of coke or fanta to a client. If the client asks for fanta, the server doesn’t remember if you looked at the menu or not. it doesn't know if you have previously ordered fanta or coke before. All it knows is that it has recieved a request for fanta.
+
+The client can store urls in the history, but that is responsibility of the client, not the server, as are cookies.
+
+In a world with the state stored server side, even if the server could manage the memory constraints and book keeping of storing state, it’s not particularly failure / crash safe at all. If the server goes down, so does the state.
+
+This is what was covered by RESTful archicture and is key to scalability, in a huge way.
+
+\subsection{Example: Representation of a  Coke Vendor}
+
+The classic example is a coke machine, which is a real life, physical thing. Some students at MIT ``put the machine on the internet''. The idea being that they could see the state of the machine on the internet without having to physically visit it. At the time, long before the internet of things, it became momentarily famous, because the status of the machine could be seen worldwide. The machine could have shown the temperature, the price, the stock of the machine. The physical thing is the resource, and the status on the internet is the abstraction or representation of it, which could be interacted with (ie. viewed) on the internet.
+
 
 
 % -----------------------------------------------------------------------------
@@ -457,11 +481,16 @@ Curl interacts with \textbf{http} requests? look into.
 “new” is for human beings, not for robots.
 
 
+
 % -----------------------------------------------------------------------------
 \section{Extensible Mark Up Language}
 \label{sec:XML}
 
 What is mark up?
+
+
+Machines can read XML because it is a formal language it can easily process with tags containing different aspects which are easy to navigate. Included is a handy description of how to make sense of it.
+
 
 
 % -----------------------------------------------------------------------------
@@ -491,6 +520,7 @@ In industries there can be decided upon formats. Very powerful because it is a c
 
 
 
+
 % -----------------------------------------------------------------------------
 \section{Database Integrity}
 
@@ -511,6 +541,7 @@ All three places! In the model in the view and the controller. Advantage of vali
 rails auto generates a bunch of validation methods. When something is wrong, it tells you everything wrong with it.
 
 Rails doesn’t: maintain data in the form  which you got right (which is good convention).
+
 
 
 % -----------------------------------------------------------------------------
@@ -550,6 +581,7 @@ Sharding: A database management system may shard a table by storing different ro
 Not only SQL = NoSQL DB management systems may replace a table with a simple key/value store. Advantage is that the data doesn’t need to be structured. Can be stored Google does this, but they can search unstructured data very well. More for a DB course.
 
 
+
 % -----------------------------------------------------------------------------
 \section{Data Warehousing}
 
@@ -584,6 +616,7 @@ Archival sector. Data can nowadays be stored forever. The probability of being a
 Retrieving data from the transactional database isn’t a zero cost operation. In fact, if a website is performing badly, asking questions can make the website perform worse, driving customers worse and causing a vicious cycle. The Transactional DB is meant for customers, not for the data warehouse. Shouldn’t mine your data at the expense of the user.
 
 Need to answer the question: How are we doing right now? Last week? This year? Past 5 years? Historically. Other businesses will do this, so you need to. They will know what their customers want and they will provide it. That’s why you need a data warehouse.
+
 
 
 % -----------------------------------------------------------------------------
@@ -637,32 +670,40 @@ At one point people thought that the big data providers wouldn’t give the data
 
 
 
+
 % -----------------------------------------------------------------------------
 \section{Cloud Adoption}
+
 
 
 % -----------------------------------------------------------------------------
 \section{Cloud Obstacles and Opportunities}
 
 
+
 % -----------------------------------------------------------------------------
 \section{Case Study: Netlix}
+
 
 
 % -----------------------------------------------------------------------------
 \section{Case Study: Instagram}
 
 
+
 % -----------------------------------------------------------------------------
 \section{Case Study: Facebook Data Centre}
+
 
 
 % -----------------------------------------------------------------------------
 \section{Article: On the Design of Display Processors}
 
 
+
 % -----------------------------------------------------------------------------
 \section{Article: A View of Cloud Computing}
+
 
 
 % -----------------------------------------------------------------------------
