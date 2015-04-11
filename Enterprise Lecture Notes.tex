@@ -83,7 +83,7 @@ This provides the user interface and means that the responses can be adjusted fo
 \end{description}
 
 \subsection{HTTP: The Hypertext Transfer Protocol}
-\label{http}
+\label{sec:http}
 
 Communication is provided through the \textbf{Hypertext Transfer Protocol} (\textbf{HTTP}). \textbf{HTTP} is a call and response protocol. The client makes a call (request) and the server sends a response. The response is usually a web page or service. All \textbf{HTTP} communication is in form text (Strings), rather than ints, bools or other types.
 
@@ -297,43 +297,63 @@ Ruby on Rails employs a design pattern known as the Object-Relational Mapping. T
 The Views can contain forms and hyperlinks so that CRUD operations can be sent via HTTP. Might not need forms because the code might be accessed via other code / machines using urls like an API. update and delete/destroy are not described in the view because they cannot be issued by the browser.
 
 
+
 % -----------------------------------------------------------------------------
 \section{Remote Procedure Calls}
 \label{sec:RPC}
 
-Problem of how to distribute work between multiple CPUs. Necessary because the limits of serial processors are quickly reached these days.
+\subsection{Parallelism}
+As an enterprise scale, more CPUs will be required, because the limits of what a serial processor can do will be reached. Furthermore, the limits of serial processors are being reached in that they are no longer becoming faster and more powerful as dictated by Moore's Law, so parallelism is required to match the increased demand for computing power. The problems with this are
+\begin{enumerate}
+   \item How to distribute work between multiple CPUs? Do you divide different tasks between different CPUs, or do you divide data between CPUs and have them each do the same task to the different data?
+   \item How to load balance the CPUs. If one processor is idling, that is costing money for gain. It is wasted power, so the problem of dynamic task management and load balance is necessary.
+   \item Deadlock and Livelock are common problems as parallel processors block while sending or receiving messages or try to access the same resource simultaneously.
+ \end{enumerate}
 
-A regular procedure call is simply a local method invocation with different args. ie. f(a, b, c).
+ Distributed or parallel computing is the field of study of this problem. One paradigm is that of \textbf{Remote Procedure Calls}. A regular procedure call is simply a local method invocation with different args. ie. $f(a, b, c)$. The remote aspect comes from one computer invoking a method call on another processor across a network. There are more problems specific to this form or parallelism.
 
-Problems:
-Message passing: blocking/non blocking messages, race conditions.
-Naming problem: name not only args, but the machine upon which the code runs.
-Serialisation problem: Have to be able to send the data across a network.
-Does it make sense to do it? The cost of message passing is much higher than local memory access/computation.
+\begin{enumerate}
+  \item How to address the function? Need to name the machine on which the method is being invoked.
+  \item How to serialise the arguments that are being passed to the remote method invocation? Ints might be easy enough to serialise but arrays with pointers might be more complicated.
+  \item Also, return of the results suffers the same problems.
+  \item It might not even make sense to use RPC! The latency and overhead involved in message passing is many orders of magnitude higher than access to local or cache memory, so it is much more efficient to do a simple computation locally, even if the computation is duplicated across many processors.
+\end{enumerate}
 
-Traditional RPC calls client needs a stub, which is what procedures the server provide. Both require a network layer for packing and unpacking args.
+\subsection{Traditional RPC}
 
-Problems with traditional model:
-Typing issues/formatting problem might not be checked until the message is at the server.
-Other problem: the client must have an implementation of the stub, remote procedure calls etc in order to be able to run it.
-Also slow.
+For RPC to occur, we must have a client program and a server program sitting on a conected network. The client must have a stub, which lists the procedures and functionality that the server provides and which therefore can be called remotely by the client. The server itself must of course have an implementation of all the procedures listed in the stub! Both the client and the server require a network layer for packing and unpacking procedure arguments and objects. The client sees the stub as a list of regular methods. However, on invocation, the methods in the stub \textbf{marshals} the parameters for the procedure and packs them into a method. The server unpacks the methods, unmarshals the parameters, runs the procedure, then marshals the response, sends it over the network, which is then unpacked, unmarshalled by the client.
 
-Solutions:
-Use a standard interface. There are two particular ones: CORBA and RMI (for Java). 
+%image from the lecture notes.
 
-We’re not going to use either. A much more widely available one is \textbf{HTTP}, consisting of the request line headers, bodies etc. as seen earlier. Even the above two are not ubiquitous and require the client, who can’t be considered universally capable enough to download and install/update software such as CORBA.
+\subsection{Drawbacks of RPC}
+\begin{enumerate}
+  \item Might be inconcsistencies with convetions and formats of arguments (how big is a long integer?)
+  \item Every client must have an implementation of the stub in order to speak to the server. This can be a large problem because it requires the client to be up to date with the required level of software which might be more than the average user can manage. Also, different servers might require you to have different stubs, so there is a lack of universality. 
+  \item Also slow because there is a lot of packing and unpacking involved.
+\end{enumerate}
 
-Operation Information
+One solution to the second problem is to use a standard interface for RPC. There are two well known ones: the \textbf{Common Object Request Broker Architecture} (\textbf{CORBA}) and in Java there is \textbf{Remote Method Invocation} (\textbf{RMI}).
 
-We can specify the procedure to be called on the server in the resource section of the request.
-Can specify arguments as query string values when using GET. Follows “?” character, as in google, youtube etc. Problem: can leave out arguments etc because \textbf{HTTP} is weakly typed. No strong checking of the imminent procedure call, might only be found at run time, and fail on the server. Advantage: gets through firewalls and only dependency is a modern browser, which are \textbf{HTTP} capable.
+\subsection{HTTP RPC}
+However, we’re not going to use either. A much more widely available one is \textbf{HTTP}, consisting of the request line headers, bodies etc. as seen earlier in \ref{sec:http}. Even the above two standards are not ubiquitous and require the client, who can’t be considered universally capable enough to download and install/update software such as CORBA. HTTP however, can be guaranteed to work with pretty much any interface. Furthermore, it is much better at being accepted by most firewalls, so there is an added advantage there.
 
-\textbf{HTTP} RPC Returns
+We can specify the procedure to be called on the server in the resource section of the \textbf{GET} request.
+Can specify arguments as query string values when using \textbf{GET}. Follows “?” character, as in google, youtube etc. The problem with this is it is possible to leave out arguments or provide invalid argument types because \textbf{HTTP} is weakly typed. There is no strong checking of the imminent procedure call so errors might only be found at run time and fail on the server. The main advantage is that the only dependency for HTTP RPC is a modern browser which is \textbf{HTTP} capable, which is all of them.
 
-Needs to be a significant amount of work: an RPC to add two numbers would not be worth it.
-404 errors occur because of the weak typing of \textbf{HTTP} requests/RPCs. The APIs are not published in a machine readable way. Recall 400s are permanent and 500s are transient.
 
-Close-Coupling
+Might want to look at the lecture slides and copy and comment on some diagrams
+
+Anatomy of the request strings.
+operations and argument information can be specified using query strings in the request line.
+Connection information can be described in the headers.
+Semantic difference between GET and POST requests: Arguments are contained in the url string for GET requests which mean a) the args are visible, which is a bad idea for secure information, but also b) serialised objects might be large and there might be loads of arguments which can create long, intricate and ugly urls (which used to be a problem: your browser could be crashed by long links because they couldn't deal with too many characters.)
+
+result code.
+404 errors occur because of the weak typing of \textbf{HTTP} requests / RPCs. The APIs are not published in a machine readable way. Recall 400s are permanent and 500s are transient.
+
+Of note: HTTP does not require the installation of custom RPC client software such as CORBA. Client users might not have either the permission or the technical knowledge to be able to install such software, so the ease of HTTP RPC for the client is definitely advantageous.
+
+\subsection{Close-Coupling}
 
 If you invent your own API you get a close coupling of server and client. Therefore, if the API changes, the contract is broken and the client programs will no longer work because their \textbf{HTTP} requests will fail.
 
