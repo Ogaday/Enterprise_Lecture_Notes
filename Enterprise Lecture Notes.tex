@@ -276,24 +276,25 @@ Sometimes services cannot be abstracted and decomposed fully from each other, an
 % -----------------------------------------------------------------------------
 \section{Ruby on Rails}
 
-Ruby by itself is nothing special, does everything that python, php etc does. New generation of programming languages. We are going to look at a very useful framework for ruby though, Ruby on Rails. Does a lot of the low level stuff for you. Two advantages:
- 
- 
+Ruby by itself is nothing special, does everything that python, php and other high level, dynamically typed, OO languages do. This course is going to look at a very useful framework for Ruby: \textbf{Ruby on Rails}. It attempts to do a lot of the low level stuff when you when you set up a web application. Two advantages:
 
-Recap MVC design pattern. Rails provides an outline implementation of the MVC in Ruby. Doesn’t create the whole platform for you, you can’t get a replicate facebook, for instance. However, far fewer mistakes, plus more maintainable, because the common frameworks means new developers can approach the project and see how it works because things are done in a standard way.
+\begin{enumerate}
+  \item It does a lot of work for you. It creates a lot essential files and directories that you would make every time, prepares and positions resources in a standard way.
+  \item You don't forget things and make mistakes because you are notified of everything of you need to do.
+\end{enumerate}
 
-See lecture slides for tutorial. Can start with any component of the MVC.
+Rails provides an outline implementation of the MVC in Ruby. You are compelled to use the MVC architecture when using Rails. Raisl Ddesn’t create the whole platform for you, for instance you can’t get a replica of facebook. However, this leads to far fewer mistakes being made and furthermore the application will be much more maintainable, because the common frameworks and convention over configuration means new developers can approach the project and see how it works because things are done in a standard way.
 
-``\$rake'' is the japanese / ruby equivalent of unix ``\$make'' which is something to do with build automation.
-``\$rake db:rake'' means updates the latest version of the db. Uses ``Object relational mapping'' - There is a direct map between lines in the database and objects? ORM is another design pattern that allows databases to be represented in the code and manipulated in the code even if the types seem incompatible.
+\subsection{Using Rails}
+The lecture slides cover a brief tutorial and there are many tutorials online as well. The scope is much larger than that of the lectures and is much more extensive than can be afforded in these notes, so Ruby on Rails itself will not be covered in these notes.
 
-Access to urls will run ruby code. - known as ``routing''
+\subsection{Object-Relational Mapping}
+Ruby on Rails employs a design pattern known as the Object-Relational Mapping. This pattern (which also exists in other laguages) dictates that there is direct map between lines in a database (records) and objects which live in ruby code. Therefore objects can be manipulated in Ruby code and the modified record can be saved in the database. This is a very useful pattern and allows for greater abstraction in the model, which as prior mentioned, is very useful.
 
-(submitting form is a bad idea - despite the example)
+\subsection{Routing}
+\textbf{Ruby on Rails} uses something known as ``Routing'', which allows urls to maipulate the control of flow in order to run ruby code. The Ruby code then controls access to the Model and generates the Views.
 
-update and delete/destroy are not described in the view because they cannot be issued by the browser.
-
-Might not need forms because the code might be accessed via other code/machines using urls like an API.
+The Views can contain forms and hyperlinks so that CRUD operations can be sent via HTTP. Might not need forms because the code might be accessed via other code / machines using urls like an API. update and delete/destroy are not described in the view because they cannot be issued by the browser.
 
 
 % -----------------------------------------------------------------------------
