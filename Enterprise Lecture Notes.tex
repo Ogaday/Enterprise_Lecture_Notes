@@ -38,6 +38,8 @@ University of Exeter}
 
 \pagebreak
 
+
+% -----------------------------------------------------------------------------
 \section{Introduction}
 \label{sec:intro}
 
@@ -65,6 +67,8 @@ This course makes two axiomatic assumotions:
 \item \textbf{Enterprise Computing is done on the Ruby on Rails framework.} This is a controversial claim because there are many models available for web enterprises and Ruby on Rails provides just one instance of that. However this course will only be concerned with Enterprise Computing with Ruby on Rails.
 \end{enumerate}
 
+
+% -----------------------------------------------------------------------------
 \section{Three-Tier Architecture}
 \label{sec:tier}
 
@@ -189,6 +193,8 @@ Note that is possible to get a snapshot of past browser activity by looking at t
 This is often in HTML, but can be anything else (javascript, xml, etc).
 \end{description}
 
+
+% -----------------------------------------------------------------------------
 \section{Introduction to Ruby}
 \label{sec:ruby}
 
@@ -196,6 +202,8 @@ Ruby is duck typed, interpreted, high level, Object Oriented language. It was in
 
 %Ruby on Rails is a web framework for building web applications which follow the Model-View-Controller design pattern (see later). Ruby on Rails itself is not examinable and is covered with much more expertise by countless others so I won't repeat them here.
 
+
+% -----------------------------------------------------------------------------
 \section{Model-View-Controller}
 \label{sec:MVC}
 
@@ -219,6 +227,8 @@ This pattern is also reproduced in other languages and frameworks, such as PHP, 
 See the lecture slides for an example of an implementation of the MVC design pattern in Ruby on Rails.
 
 
+
+% -----------------------------------------------------------------------------
 \section{Service-Oriented Architecture}
 \label{sec:SOA}
 
@@ -226,7 +236,7 @@ The element that separates enterprise web systems from simple web applications a
 
 \textbf{Refactoring} is the process of changing the structure or layout of software without changing the underlying functionality. The aim is that the functionality is delivered in a simpler, more easily maintainable or more effective way.
 
-\textbf{Service-Oriented Architecture} is a refactoring of the \textbf{Three-Tier Architecture} so that it is better suited to enterprise web systems. In order to achieve this the architecture incorporates multiple servers and databases, decomposition of service, a load balancer and a data warehouse alongside the \textbf{Three-Tier Architecture}.
+\textbf{Service-Oriented Architecture} is a refactoring of the \textbf{Three-Tier Architecture} so that it is better suited to enterprise web systems. In order to achieve this the architecture incorporates multiple servers and databases, decomposition of service, a load balancer and a data warehouse into the \textbf{Three-Tier Architecture}.
 
 \subsection{Websites and Web services}
 %http://en.wikipedia.org/wiki/Web_service
@@ -234,7 +244,7 @@ The element that separates enterprise web systems from simple web applications a
 
 Websites are what you expect: human users can navigate to them in their browsers and interact with the services. Web services, on the other hand, provide services for other software via a formal, well defined and constrained interface. Often enterprises will have services which require communication with other services. This is known as Enterprise-to-Enterprise communication. The software that requests the data is known as a service requester while the software that provides it is known as the service provider.
 
-Communication. APIs. 
+Websites deliver their content to the client in the form of html or other mark up formats, which is then rendered in the browser. Web services traditionally are queried using a specific SOAP (Simple Object Access Protocol) which is usually transmitted by \textbf{HTTP}. \textbf{XML }can be used to serialize communicated objects, and \textbf{XML} will be described in \ref{sec:XML}. \textbf{APIs} are now moving towards a more RESTful architecture which will be described in \ref{sec:REST}, which do not rely on SOAP.
 
 \subsection{Features of SOA}
 
@@ -251,16 +261,19 @@ A significant feature of \textbf{Service-Oriented Architecture} is the decomposi
   \item[Redundency and Failover]
   Business need to protect against fault or attacks which bring down their services. If a server fails they will be unable to serve their customers, which is a cardianl sin in the world of business. As a business scales and gets more custom, redudancy needs to be provided. \textbf{SOA} provides many servers for the same service and a load balancer. That way, if a server fails, the service requester or customer can be routed to a different server by the load balancer.
 \end{description}
-Decompose the services in order to provide understandability, isolation, uniform access(Everyone knows how it works, should all work the same way between services. Should be predictable. This provides a contract between user and service provider - cannot change API functionality once it is released or user will be upset and confused), scalability, and redundancy and failover.
-
 
 In the \textbf{Three-Tier Architecture}, the Presentation and the Business tiers won’t do much hard work - All the heavy lifting is done by the Data services tier. That’s why a load balancer is introduced, to make sure the work is evenly distributed across the multiple databases.
 
-APIs are now requently RESTful, because it allows for Service Oriented Architecture to be applied much more easily. This will be covered in \ref{sec:REST}.
-
 \subsection{Example: Google}
-Examples: Both models use the Service Oriented architecture with services decomposed. The advantages are written above, plus with the modularity of the structure of the business, it would be easy to expand to offer a new service as the business develops, such as offering a new insurance field, or a new service, plus if one service fails, the others will be unaffected. Another good example is Google; Google offers many diverse and well developed services (Ads, search, maps, mail, drive, google+, calendar, scholar, videos, the play store and many more) which are well separated and modulated. This is not always possible though, sometimes services are impossible to extract and insulate from the other services. A good example is the login service offered by a lot of enterprises. If that fails, a lot of the other services may be rendered unavailable.
 
+Google offers many, many services which can be used independently of each other. Google offer add space, search engine, social network, maps, email, calendar, video service, cloud storage, cloud computing, version control cloud based office (Google Drive), currency converter, calculator, translator and many more services. They will have servers on each continent to serve different clients and they have to deal with many different clients who may lose connection during their interactions. Google will be able to deal with servers failing and continue to offer all of their services. They will have different teams working on the search engine and the gmail service. Presumably, also, if the servers supporting the search engine functionality all fail, it will not also affect their ability to serve clients who want to use the gmail service.
+
+\subsection{Exceptions}
+
+Sometimes services cannot be abstracted and decomposed fully from each other, and therefore if there is a failure in one service, the other services will also be affected. The best example of this is the log in service, which mnay enterprises offer. If the log in and authentification service fails then while the search engine, videos and other services may be available, many other of Google's services might not be, such as the email service, the calendar service and others. This is because it it is too integrated into the usage. The log in service will probably still have its own team, however, who can take ownership of it, but other services will need to be able to interact with it, which is why uniformity of access must be maintained.
+
+
+% -----------------------------------------------------------------------------
 \section{Ruby on Rails}
 
 Ruby by itself is nothing special, does everything that python, php etc does. New generation of programming languages. We are going to look at a very useful framework for ruby though, Ruby on Rails. Does a lot of the low level stuff for you. Two advantages:
@@ -282,6 +295,8 @@ update and delete/destroy are not described in the view because they cannot be i
 
 Might not need forms because the code might be accessed via other code/machines using urls like an API.
 
+
+% -----------------------------------------------------------------------------
 \section{Remote Procedure Calls}
 \label{sec:RPC}
 
@@ -325,6 +340,8 @@ Client sides will have to update their programs to reflect the changed server pr
 
 
 
+
+% -----------------------------------------------------------------------------
 \section{Representational State Transfer}
 \label{sec:REST}
 
@@ -370,6 +387,8 @@ Mixing of code and html is a design pattern: the Template design pattern.
 
 Finally: the world wide web has some incredibly successful ideas behind it.
 
+
+% -----------------------------------------------------------------------------
 \section{Resource Oriented Architecture}
 
 Why do we want scalability in enterprise computing? Because we want our enterprise to be able to grow to match demand and the internet so far does not appear to have a near limit on how far it can scale, so our enterprise needs to be able to (potentially) match that. We don’t want to reach a point of growth and find the architecture needs to be redesigned because that is costly and stops the service from reaching the customer.
@@ -396,6 +415,8 @@ In the example, if someone asks for fanta, the server doesn’t remember if you 
 
 Even if the server could manage the memory constraints and book keeping of storing state, it’s not particularly failure/crash safe at all! if the server goes down, so does the state.
 
+
+% -----------------------------------------------------------------------------
 \section{Storage as a service}
 
 To recap, if we build with the contents of the above lectures in mind, then we can be ensured to dodge a few pitfalls ahead in the road of a expanding enterprise.
@@ -418,10 +439,15 @@ Curl interacts with \textbf{http} requests? look into.
 
 “new” is for human beings, not for robots.
 
+
+% -----------------------------------------------------------------------------
 \section{Extensible Mark Up Language}
+\label{sec:XML}
 
 What is mark up?
 
+
+% -----------------------------------------------------------------------------
 \section{JSON}
 
 Why even consider JSON? XML is “Verbose”. JSON, comparably is “sparse”. Even bytes saved can make a big difference if you have many customers/clients. The limit is on the number of bytes you want to send, not on the customers. Want to be able to deal with potentially infinite customers. Originally invented/invented to be used for the asynchronous web.
@@ -447,6 +473,8 @@ In industries there can be decided upon formats. Very powerful because it is a c
 
 
 
+
+% -----------------------------------------------------------------------------
 \section{Database Integrity}
 
 Integrity of data is knowing that the database contains what you think it contains, ie. correct and uncorrupted data.
@@ -467,6 +495,8 @@ rails auto generates a bunch of validation methods. When something is wrong, it 
 
 Rails doesn’t: maintain data in the form  which you got right (which is good convention).
 
+
+% -----------------------------------------------------------------------------
 \section{Database Scalability}
 
 By now we are familiar with the \textbf{Three-Tier Architecture}: Presentation - Business Services - Data services.
@@ -502,6 +532,8 @@ Sharding: A database management system may shard a table by storing different ro
 
 Not only SQL = NoSQL DB management systems may replace a table with a simple key/value store. Advantage is that the data doesn’t need to be structured. Can be stored Google does this, but they can search unstructured data very well. More for a DB course.
 
+
+% -----------------------------------------------------------------------------
 \section{Data Warehousing}
 
 Online transactional transaction processing
@@ -536,6 +568,8 @@ Retrieving data from the transactional database isn’t a zero cost operation. I
 
 Need to answer the question: How are we doing right now? Last week? This year? Past 5 years? Historically. Other businesses will do this, so you need to. They will know what their customers want and they will provide it. That’s why you need a data warehouse.
 
+
+% -----------------------------------------------------------------------------
 \section{Cloud A rchitecture}
 
 Analogy between providing electricity and the cloud.
@@ -585,20 +619,36 @@ Edward Snowden:
 At one point people thought that the big data providers wouldn’t give the data away to the government. Now the cloud providers have had a rethink, Google encrypts data everywhere it sends it.
 
 
+
+% -----------------------------------------------------------------------------
 \section{Cloud Adoption}
 
+
+% -----------------------------------------------------------------------------
 \section{Cloud Obstacles and Opportunities}
 
+
+% -----------------------------------------------------------------------------
 \section{Case Study: Netlix}
 
+
+% -----------------------------------------------------------------------------
 \section{Case Study: Instagram}
 
+
+% -----------------------------------------------------------------------------
 \section{Case Study: Facebook Data Centre}
 
+
+% -----------------------------------------------------------------------------
 \section{Article: On the Design of Display Processors}
 
+
+% -----------------------------------------------------------------------------
 \section{Article: A View of Cloud Computing}
 
+
+% -----------------------------------------------------------------------------
 \section{Article: Eventually Consistent: Not What You Were Expecting?}
 
 
