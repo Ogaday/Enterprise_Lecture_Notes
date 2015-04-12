@@ -458,27 +458,48 @@ The classic example is a coke machine, which is a real life, physical thing. Som
 
 
 % -----------------------------------------------------------------------------
-\section{Storage as a service}
+\section{Storage As A Service}
 
 To recap, if we build with the contents of the above lectures in mind, then we can be ensured to dodge a few pitfalls ahead in the road of a expanding enterprise.
 
-Microsoft’s SkyDrive, cloud driven storage service was taken to court by Sky television, so it’s a relic nowadays.
+One business model seen on the cloud is called \textbf{Storage as a Service}. Dropbox, Google Drive, iCloud and Microsoft Office 365 are all examples of this business. In service provided is the saving and loading of client documents to the cloud.
 
-Coffee bar is an analogy for the MVC. Barrista takes your order and has various hardware to accomplish the order. They may need to access their storage for some ingredients. Just before it is served they ask for special needs such as sprinkles.
+\subsection{Use Cases}
 
-Why use MVC? Because it’s been proven to work, but also because it’s is compulsory with Ruby on Rails.
+Each implementation is different. Dropbox doesn't allow the modification of stored documents, while Google and Microsoft integrate another service with the storage (an online suite of programs for work). Each service will likely also include a log in/out use case. However, below are some of the essential use cases which might be offered by such a \textbf{Storage as a Service} server.
 
-Use cases correspond to \textbf{http} verbs, ie. GET, POST, PUT, DELETE, used for RESTful web services.
+\begin{description}
+\item[Index documents] Display an index which lists the documents stored by the client.
+\item[Create document] Create and save a new document to be stored.
+\item[New document] (For human clients only) Provide a form for creating a new document.
+\item[Show document] Display a document specified by the client.
+\item[Update document] Display an interface for modifying a document in storage.
+\item[Destroy document] Delete a document specified by the client.
+\end{description}
 
-Object Relational Map hides db statements behind objects. So you call ruby code which automatically calls the sql commands.
+\subsection{Implementation}
 
-Template design pattern allows the mixing of html and ruby code, only differentiable by the tags.
+\textbf{Storage as a Service} can be designed to follow the \textbf{MVC} pattern. These use cases can be accomplished by the client by linking them to actions for the controller to process and delegate which can be linked in turn to the \textbf{HTTP} verbs, ie. \textbf{GET}, \textbf{POST}, \textbf{PUT}, \textbf{DELETE}.
 
-Have the feedback such as “Created!” so the user knows if something has gone wrong.
+\begin{tabular}{ l l l }
+  \textbf{Use case} & \textbf{Action} & \textbf{Resource} \\
+  Index documents & GET & /skydrive  \\
+  Create document & POST & /skydrive  \\
+  New document & GET & /skydrive/new  \\
+  Show document & GET & /skydrive/\textit{name}  \\
+  Update document & PUT & /skydrive/\textit{name}  \\
+  Destroy document & DELETE & /skydrive/\textit{name}  \\
+\end{tabular}
 
-Curl interacts with \textbf{http} requests? look into.
-
-“new” is for human beings, not for robots.
+The use of the \textbf{HTTP} verbs means the service is also RESTful.
+\begin{description}
+  \item[Server Client Constraint] is preserved because in each use case the server is responding to \textbf{HTTP} requests and providing HTML for the client to navigate.
+  \item[Statelessness] is preserved by HATEOS.
+  \item[Caching] can be used by the client to keep temporary local copies of the documents.
+  \item[Uniform Interface] is kept because the commands are universally understood and do as expected. eg. Create does not destroy any documents.
+  \item[Layered System] is preserved because the user cannot see the underlying implementation, the database or the MVC code. All they see is the view which is served to them.
+  \item[Code On Demand] is possible because the server can provide embedded javascript in the HTML it provides.
+\end{description}
 
 
 
@@ -620,7 +641,7 @@ Need to answer the question: How are we doing right now? Last week? This year? P
 
 
 % -----------------------------------------------------------------------------
-\section{Cloud A rchitecture}
+\section{Cloud Architecture}
 
 Analogy between providing electricity and the cloud.
 
