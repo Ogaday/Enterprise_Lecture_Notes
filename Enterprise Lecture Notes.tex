@@ -113,26 +113,18 @@ The request methods are
 
 Note \textbf{GET} requests print the data in the URL, which is really bad for anything except debugging. Therefore bank details which are sent with a \textbf{GET} request, for instance, will leave those details in the browser in plain text, so either the request can be intercepted and read, or the browser can later be scraped because there will be a record of the url, along with the details, will be recorded in server log files.
 \item[Request Headers]
-Headers consist of \texttt{Name: Value} pairs on separate lines.
-eg. \\
+Headers consist of \texttt{Name : Value} pairs on separate lines. eg. \\
 \texttt{Content-Length: 255}
  
 Some of the most important headers are \\
 \begin{tabular}{ l l }
   \textbf{Header} & \textbf{Meaning} \\
-
   Host & domain name of server \\
-
   Cache-Control & caching allowed \\
-
   Connection & connection preferred \\
-
   Content-Length & length of body \\
-
   Cookie & cookie data \\
-
   Date & date sent \\
-
   User-Agent &  name of client \\
 \end{tabular}
 \item[The Request Body]
@@ -151,13 +143,13 @@ Furthermore, most browsers can only send \textbf{GET} and \textbf{POST} requests
 The status line consists of version, code and reason
 eg. 
 
-\begin{tabular}{ l c r }
+\begin{tabular}{ l c c }
   VERSION & CODE & REASON \\
   \texttt{HTTP/1.1} & \texttt{200} & \texttt{OK} \\
 \end{tabular}
 The string ``reason'' is determined by the code. The code indicates different responses from the server, and the first digit classifies the response.
 
-\begin{tabular}{ l l }
+\begin{tabular}{ c l }
   \textbf{INITIAL DIGIT} & \textbf{REASON} \\
   2 & Good \\
   3 & Relocation advice, resource has moved. \\
@@ -298,7 +290,7 @@ The lecture slides cover a brief tutorial and there are many tutorials online as
 Ruby on Rails employs a design pattern known as the Object-Relational Mapping. This pattern (which also exists in other laguages) dictates that there is direct map between lines in a database (records) and objects which live in ruby code. Therefore objects can be manipulated in Ruby code and the modified record can be saved in the database. This is a very useful pattern and allows for greater abstraction in the model, which as prior mentioned, is very useful.
 
 \subsection{Routing}
-\textbf{Ruby on Rails} uses something known as ``Routing'', which allows urls to maipulate the control of flow in order to run ruby code. The Ruby code then controls access to the Model and generates the Views.
+\textbf{Ruby on Rails} uses something known as ``Routing'', which allows urls to manipulate the control of flow in order to run ruby code. The Ruby code then controls access to the Model and generates the Views.
 
 The Views can contain forms and hyperlinks so that CRUD operations can be sent via HTTP. Might not need forms because the code might be accessed via other code / machines using urls like an API. update and delete/destroy are not described in the view because they cannot be issued by the browser.
 
